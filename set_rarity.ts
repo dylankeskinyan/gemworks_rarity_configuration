@@ -63,7 +63,7 @@ const rarities: RarityConfig[] = [
   // This executes the transaction to apply the rarities
   const { txSig } = await gf.addRaritiesToBank(
       stakingDefaults.FARM_ID,
-      manager,
+      manager.publicKey,
       rarities
   );
   await connection.confirmTransaction(txSig);
