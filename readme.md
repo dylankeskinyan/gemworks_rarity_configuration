@@ -2,6 +2,8 @@
 
 Open up the script `set_rarity.ts`, and first of all read it
 
+DO NOT CHANGE TXN BATCH OF 7 MINTS! IT WILL BREAK!
+
 Then:
 
 + consider updating the IDLs and the @gemworks version to match the program version if needed

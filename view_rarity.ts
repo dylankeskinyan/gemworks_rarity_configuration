@@ -46,31 +46,37 @@ let raritiesFull: RarityConfig[] = mintList;
 
   const failures = [];
 
-  for (let offset = 0; offset < length; offset += 7) {
-    const rarities = raritiesFull.slice(offset, offset + 7);
+  // USE IF CHECKING A SINGLE NFT
+  /*const test = {
+    mint: new PublicKey("4qJ9L99jwHBoDLLBPKDpVazMTaBEWwygbS7i6YgR6x3s"),
+    rarityPoints: 8
+  }
+
+  const [rarityAddr1] = await findRarityPDA(
+    farm.bank,
+    test.mint
+  );
+
+  console.log("test points " + (await gf.fetchRarity(rarityAddr1)).points);
+  */
+
+  for (let offset = 0; offset < length; offset += 1) {
+    const rarity = raritiesFull[offset];
     console.log(`Current Index: ${offset}`);
 
     try {
-      const { txSig } = await gf.addRaritiesToBank(
-        stakingDefaults.FARM_ID,
-        manager.publicKey,
-        rarities
-      );
-
-      await connection.confirmTransaction(txSig, "confirmed");
-      console.log(txSig);
-
-      // Checks if the first mint address within the current batch was set properly
       const [rarityAddr] = await findRarityPDA(
-          farm.bank,
-          rarities[0].mint
+        farm.bank,
+        rarity.mint
       );
-
+      
       const rarityAcc = await gf.fetchRarity(rarityAddr);
-      console.log(rarityAcc);
-    } catch (error) {
-      console.log(error);
-      failures.push(offset);
+      if (rarityAcc.points !== rarity.rarityPoints) {
+        throw Error;
+      }
+    } catch (e) {
+      failures.push(rarity.mint);
+      console.log(failures);
     }
   }
 
