@@ -1,3 +1,4 @@
+require('dotenv').config()
 import { clusterApiUrl, Connection, Keypair, PublicKey, SYSVAR_EPOCH_SCHEDULE_PUBKEY } from "@solana/web3.js";
 import { NodeWallet } from "@metaplex/js";
 import { Wallet } from "@project-serum/anchor";

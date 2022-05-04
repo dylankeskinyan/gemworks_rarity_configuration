@@ -1,4 +1,5 @@
-import { clusterApiUrl, Connection, Keypair, PublicKey, SYSVAR_EPOCH_SCHEDULE_PUBKEY } from "@solana/web3.js";
+require('dotenv').config()
+import { Connection, Keypair, PublicKey } from "@solana/web3.js";
 import { NodeWallet } from "@metaplex/js";
 import { Wallet } from "@project-serum/anchor";
 import farmIdl from "./idl/gem_farm.json";
@@ -14,7 +15,7 @@ export const stakingDefaults = {
   CLUSTER: "mainnet-beta",
   GEM_BANK_PROG_ID: new PublicKey("bankHHdqMuaaST4qQk6mkzxGeKPHWmqdgor6Gs8r88m"),
   GEM_FARM_PROG_ID: new PublicKey("farmL4xeBFVXJqtfxCzU9b28QACM7E2W2ctT6epAjvE"),
-  FARM_ID: new PublicKey(process.env.FARM_PK),
+  FARM_ID: new PublicKey(process.env.FARM_PK!),
 };
 
 const mintList = JSON.parse(fs.readFileSync("./mintList.json")).map(e => { e.mint = new PublicKey(e.mint); return e; });
@@ -46,8 +47,8 @@ let raritiesFull: RarityConfig[] = mintList;
 
   const failures = [];
 
-  for (let offset = 0; offset < length; offset += 7) {
-    const rarities = raritiesFull.slice(offset, offset + 7);
+  for (let offset = 0; offset < length; offset += 1) {
+    const rarities = raritiesFull.slice(offset, offset + 1);
     console.log(`Current Index: ${offset}`);
 
     try {
